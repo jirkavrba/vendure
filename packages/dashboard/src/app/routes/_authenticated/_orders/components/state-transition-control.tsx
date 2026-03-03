@@ -5,7 +5,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/vdb/components/ui/dropdown-menu.js';
-import { useDynamicTranslations } from '@/vdb/hooks/use-dynamic-translations.js';
 import { cn } from '@/vdb/lib/utils.js';
 import { Trans } from '@lingui/react/macro';
 import { CircleCheck, CircleDashed, CircleX, EllipsisVertical } from 'lucide-react';
@@ -21,6 +20,7 @@ export type StateTransitionAction = {
 
 type StateTransitionControlProps = {
     currentState: string;
+    statesTranslationFunction: (state: string) => string;
     actions: StateTransitionAction[];
     isLoading?: boolean;
 };
@@ -42,10 +42,10 @@ export function getTypeForState(state: string): StateType {
 
 export function StateTransitionControl({
     currentState,
+    statesTranslationFunction,
     actions,
     isLoading,
 }: Readonly<StateTransitionControlProps>) {
-    const { getTranslatedOrderState } = useDynamicTranslations();
     const currentStateType = getTypeForState(currentState);
     const iconForType = {
         destructive: <CircleX className="h-4 w-4 text-destructive" />,
@@ -63,7 +63,7 @@ export function StateTransitionControl({
                 title={currentState}
             >
                 <div className="flex-shrink-0">{iconForType[currentStateType]}</div>
-                <span className="truncate">{getTranslatedOrderState(currentState)}</span>
+                <span className="truncate">{statesTranslationFunction(currentState)}</span>
             </div>
             {actions.length > 0 && (
                 <DropdownMenu>

@@ -60,7 +60,7 @@ export function StateTransitionControl({
                     'inline-flex flex-nowrap items-center justify-start gap-1 h-8 rounded-md px-3 text-xs font-medium border border-input bg-background min-w-0',
                     actions.length > 0 && 'rounded-r-none',
                 )}
-                title={currentState}
+                title={statesTranslationFunction(currentState)}
             >
                 <div className="flex-shrink-0">{iconForType[currentStateType]}</div>
                 <span className="truncate">{statesTranslationFunction(currentState)}</span>
